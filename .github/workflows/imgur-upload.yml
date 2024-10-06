@@ -42,7 +42,8 @@ jobs:
           const { PicGo } = require("picgo");
           const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif', '.webp', '.svg', '.heif', '.heic'];
           // 获取 commit 提交后，修改的文件
-          try {
+          (async () => {
+             try {
             // 获取上一个提交的哈希
             const lastCommit = execSync("git rev-parse HEAD~").toString().trim();
             // 获取当前提交的哈希
@@ -89,3 +90,4 @@ jobs:
           } catch (error) {
             console.error(error);
           }
+            })();
