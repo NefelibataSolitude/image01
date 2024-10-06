@@ -22,7 +22,13 @@ const changedFiles = [];
 
 // 从 commits 中获取所有的变更文件
 eventData.commits.forEach(commit => {
-  changedFiles.push(...commit.added, ...commit.modified);
+  // 确保 added 和 modified 存在，并且是数组
+  if (commit.added && Array.isArray(commit.added)) {
+    changedFiles.push(...commit.added);
+  }
+  if (commit.modified && Array.isArray(commit.modified)) {
+    changedFiles.push(...commit.modified);
+  }
 });
-console.log(changedFiles);
+console.log(eventData);
 // 获取 commit 提交后，修改的文件
