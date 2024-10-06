@@ -62,7 +62,8 @@ const imageExtensions = [
       "picBed.current": "imgur",
       "picBed.imgur.clientId": process.env.IMGUR_CLIENT_ID,
     });
-    await picgo
+    if (images.length > 0) {
+      await picgo
       .upload(images)
       .then(async (result) => {
         console.log(result);
@@ -70,6 +71,7 @@ const imageExtensions = [
       .catch((err) => {
         console.error(err);
       });
+    }
   } catch (error) {
     console.error(error);
   }
