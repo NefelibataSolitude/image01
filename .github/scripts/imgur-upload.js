@@ -30,5 +30,6 @@ eventData.commits.forEach(commit => {
     changedFiles.push(...commit.modified);
   }
 });
+console.log("事件信息:", changedFiles);
 console.log(eventData);
 // 获取 commit 提交后，修改的文件
