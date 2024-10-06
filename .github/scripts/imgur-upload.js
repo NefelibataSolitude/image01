@@ -53,6 +53,7 @@ const imageExtensions = [
           const buffer = Buffer.from(byteArray, "latin1");
           return buffer.toString("utf8");
         }
+        console.log(filePath)
         return filePath;
       }
     });
