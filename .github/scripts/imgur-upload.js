@@ -64,6 +64,11 @@ const imageExtensions = [
         return path.join(workspaceDir, filePath);
       });
 
+      console.log(process.env.QINIU_ACCESS_KEY,
+        process.env.QINIU_SECRET_KEY,
+       process.env.QINIU_BUCKET,
+        process.env.QINIU_AREA,
+        process.env.QINIU_PATH);
     if (images.length > 0) {
       // 执行上传操作
       const picgo = new PicGo();
