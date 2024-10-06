@@ -55,23 +55,22 @@ const imageExtensions = [
         return filePath;
       }
     });
-    console.log(images)
     if (images.length > 0) {
       // 执行上传操作
-    const picgo = new PicGo();
-    picgo.setConfig({
-      "picBed.uploader": "imgur",
-      "picBed.current": "imgur",
-      "picBed.imgur.clientId": process.env.IMGUR_CLIENT_ID,
-    });
-      await picgo
-      .upload(images)
-      .then(async (result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.error(err);
+      const picgo = new PicGo();
+      picgo.setConfig({
+        "picBed.uploader": "imgur",
+        "picBed.current": "imgur",
+        "picBed.imgur.clientId": process.env.IMGUR_CLIENT_ID,
       });
+      await picgo
+        .upload(images)
+        .then(async (result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   } catch (error) {
     console.error(error);
