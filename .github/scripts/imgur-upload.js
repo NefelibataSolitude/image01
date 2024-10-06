@@ -25,7 +25,6 @@ const imageExtensions = [
       `git diff --name-status ${lastCommit} ${currentCommit}`,
       { encoding: "utf-8" }
     ).trim();
-    console.log(changes)
     const images = changes.split("\n").map((change) => {
       const [status, filePath, ...other] = change.split("\t");
       // 只处理修改的文件
@@ -53,9 +52,9 @@ const imageExtensions = [
           const buffer = Buffer.from(byteArray, "latin1");
           return buffer.toString("utf8");
         }
-        console.log(filePath)
         return filePath;
       }
+      return null;
     });
     console.log(images)
     if (images.length > 0) {
