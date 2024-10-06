@@ -68,9 +68,9 @@ const imageExtensions = [
       // 执行上传操作
       const picgo = new PicGo();
       picgo.setConfig({
-        "picBed.uploader": "imgur",
-        "picBed.current": "imgur",
-        "picBed.imgur.clientId": process.env.IMGUR_CLIENT_ID,
+        "picBed.uploader": "smms",
+        "picBed.current": "smms",
+        "picBed.smms.token": process.env.SMMS_TOKEN,
       });
       await picgo
         .upload(images)
