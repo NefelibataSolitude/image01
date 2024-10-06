@@ -41,4 +41,9 @@ jobs:
         env:
           IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
           SMMS_TOKEN: ${{ secrets.SMMS_TOKEN }}
-          GITHUB_EVENT_PATH: ${{ github.event_path }}  # 获取此次push事件的详细信息
+          QINIU_ACCESS_KEY: ${{ secrets.QINIU_ACCESS_KEY }}
+          QINIU_SECRET_KEY: ${{ secrets.QINIU_SECRET_KEY }}
+          QINIU_BUCKET: ${{ vars.QINIU_BUCKET }}
+          QINIU_ZONE: ${{ vars.QINIU_ZONE }}
+          QINIU_PATH: ${{ vars.GITHUB_TOKEN }}
+          # GITHUB_EVENT_PATH: ${{ github.event_path }}  # 获取此次push事件的详细信息

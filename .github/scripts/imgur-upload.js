@@ -68,9 +68,16 @@ const imageExtensions = [
       // 执行上传操作
       const picgo = new PicGo();
       picgo.setConfig({
-        "picBed.uploader": "smms",
-        "picBed.current": "smms",
-        "picBed.smms.token": process.env.SMMS_TOKEN,
+        "picBed.uploader": "qiniu",
+        "picBed.current": "qiniu",
+        "picBed.qiniu": {
+          accessKey: process.env.QINIU_ACCESS_KEY,
+          secretKey: process.env.QINIU_SECRET_KEY,
+          bucket: process.env.QINIU_BUCKET,
+          area: process.env.QINIU_AREA,
+          path: process.env.QINIU_PATH,
+          url: 'https://cdn.jsdelivr.net/gh/'
+        },
       });
       await picgo
         .upload(images)
