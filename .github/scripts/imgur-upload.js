@@ -1,5 +1,8 @@
 const { execSync } = require("child_process");
 const { PicGo } = require("picgo");
+const path = require("path");
+// 获取 GitHub Actions 的工作目录
+const workspaceDir = process.env.GITHUB_WORKSPACE || process.cwd();
 const imageExtensions = [
   ".jpg",
   ".jpeg",
@@ -50,9 +53,9 @@ const imageExtensions = [
             .join("");
           // 创建 Buffer 并解码为 UTF-8 字符串
           const buffer = Buffer.from(byteArray, "latin1");
-          return buffer.toString("utf8");
+          return path.join(workspaceDir, buffer.toString());
         }
-        return filePath;
+        return path.join(workspaceDir, filePath);
       }
     });
     if (images.length > 0) {
