@@ -40,4 +40,5 @@ jobs:
         run: node .github/scripts/imgur-upload.js
         env:
           IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
+          SMMS_TOKEN: ${{ secrets.SMMS_TOKEN }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}  # 获取此次push事件的详细信息
