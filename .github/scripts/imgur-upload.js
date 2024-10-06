@@ -25,7 +25,7 @@ const imageExtensions = [
       `git diff --name-status ${lastCommit} ${currentCommit}`,
       { encoding: "utf-8" }
     ).trim();
-    const images = changes.split("\n").map((change) => {
+    const images = changes.split("\n").filter((change) => {
       const [status, filePath, ...other] = change.split("\t");
       // 只处理修改的文件
       if (
@@ -54,7 +54,6 @@ const imageExtensions = [
         }
         return filePath;
       }
-      return null;
     });
     console.log(images)
     if (images.length > 0) {
