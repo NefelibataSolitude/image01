@@ -3,6 +3,7 @@ const { PicGo } = require("picgo");
 const path = require("path");
 // 获取 GitHub Actions 的工作目录
 const workspaceDir = process.env.GITHUB_WORKSPACE || process.cwd();
+console.log(workspaceDir);
 const imageExtensions = [
   ".jpg",
   ".jpeg",
