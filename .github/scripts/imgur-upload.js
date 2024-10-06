@@ -17,7 +17,7 @@ const imageExtensions = [
 (async () => {
   try {
     // 获取上一个提交的哈希
-    const lastCommit = execSync("git rev-parse HEAD~").toString().trim();
+    const lastCommit = execSync("git rev-parse HEAD^").toString().trim();
     // 获取当前提交的哈希
     const currentCommit = execSync("git rev-parse HEAD").toString().trim();
     // 获取文件更改信息
