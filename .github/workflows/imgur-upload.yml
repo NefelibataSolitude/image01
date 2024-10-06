@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: imgur upload
 
 # Controls when the workflow will run
 on:
@@ -23,14 +23,69 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.17.0" # 使用的 Node.js 版本
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Install dependencies
+        run: npm install picgo -g
+
+      - name: Upload Image to Imgur
+        env:
+          IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          const { execSync } = require("child_process");
+          const { PicGo } = require("picgo");
+          const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif', '.webp', '.svg', '.heif', '.heic'];
+          // 获取 commit 提交后，修改的文件
+          try {
+            // 获取上一个提交的哈希
+            const lastCommit = execSync("git rev-parse HEAD~").toString().trim();
+            // 获取当前提交的哈希
+            const currentCommit = execSync("git rev-parse HEAD").toString().trim();
+            // 获取文件更改信息
+            const changes = execSync(`git diff --name-status ${lastCommit} ${currentCommit}`, { encoding: "utf-8" }).trim();
+            const images = changes.split("\n").map(change => {
+              const [status, filePath, ...other] = change.split("\t");
+              // 只处理修改的文件
+              if ((status === "M" || status === "A") && imageExtensions.some(ext => filePath.endsWith(ext))) {
+                if (/"/g.test(filePath) && /\\/.test(filePath)) {
+                  const cleanedfilePath = filePath.replace(/"/g, "");
+                    // 将转义字符转换为实际的字节
+                    const byteArray = cleanedFilename
+                      .split("\\")
+                      .map((part, index) => {
+                        if (index === 0) return part; // 第一个部分不需要处理
+                        if (part.includes(".")) {
+                          const [num, ...other] = part.split(".");
+                          return [String.fromCharCode(parseInt(num, 8)), ...other].join(".");
+                        }
+                        return String.fromCharCode(parseInt(part, 8)); // 将八进制转为字符
+                      })
+                      .join("");
+                    // 创建 Buffer 并解码为 UTF-8 字符串
+                    const buffer = Buffer.from(byteArray, "latin1");
+                    return buffer.toString("utf8");
+                }
+                return filePath;
+              }
+            });
+            // 执行上传操作
+            const picgo = new PicGo();
+            picgo.setConfig({
+              "picBed.uploader": "imgur",
+              "picBed.current": "imgur",
+              "picBed.imgur.clientId": process.env.IMGUR_CLIENT_ID
+            });
+            await picgo.upload(images).then(async (result) => {
+              console.log(result);
+            }).catch(err => {
+              console.error(err);
+            }); 
+          } catch (error) {
+            console.error(error);
+          }
