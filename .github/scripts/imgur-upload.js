@@ -24,5 +24,5 @@ const changedFiles = [];
 eventData.commits.forEach(commit => {
   changedFiles.push(...commit.added, ...commit.modified);
 });
-console.log(changedFiles);)
+console.log(changedFiles);
 // 获取 commit 提交后，修改的文件
