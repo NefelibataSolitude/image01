@@ -56,14 +56,15 @@ const imageExtensions = [
         return filePath;
       }
     });
-    // 执行上传操作
+    console.log(images)
+    if (images.length > 0) {
+      // 执行上传操作
     const picgo = new PicGo();
     picgo.setConfig({
       "picBed.uploader": "imgur",
       "picBed.current": "imgur",
       "picBed.imgur.clientId": process.env.IMGUR_CLIENT_ID,
     });
-    if (images.length > 0) {
       await picgo
       .upload(images)
       .then(async (result) => {
